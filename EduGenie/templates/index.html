@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduGenie - AI Learning Assistant</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+    <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="EduGenie Logo">
+    <span>EduGenie</span>
+</div>
+
+        <nav>
+
+            <button class="menu-btn" onclick="showDashboard()">
+                🏠 Dashboard
+            </button>
+
+            <button class="menu-btn" onclick="showAssistant()">
+                🤖 AI Assistant
+            </button>
+
+            <button class="menu-btn" onclick="showQuiz()">
+                📝 Quiz
+            </button>
+
+            <button class="menu-btn" onclick="showNotes()">
+                📚 Notes
+            </button>
+            <button class="menu-btn" onclick="showProgress()">
+                📊 Progress
+            </button>
+            <button class="menu-btn" onclick="showPDF()">
+                📄 PDF Summary
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+                <h2>Learning Dashboard</h2>
+                <p>Your personal AI learning assistant</p>
+            </div>
+
+            <div class="student">
+                👋 Student
+            </div>
+
+        </header>
+
+
+        <!-- ================= WELCOME ================= -->
+
+        <section class="welcome" id="dashboard">
+
+            <h1>Learn Smarter with EduGenie 🚀</h1>
+
+            <p>
+                Your Google Gemini powered learning assistant for
+                smarter and easier learning.
+            </p>
+
+            <button onclick="showAssistant()">
+                Start Learning →
+            </button>
+
+        </section>
+
+
+        <!-- ================= FEATURE CARDS ================= -->
+
+        <section class="features">
+
+            <!-- AI ASSISTANT -->
+
+            <div class="feature-card">
+
+                <div class="icon">🤖</div>
+
+                <h2>AI Assistant</h2>
+
+                <p>
+                    Ask academic questions and get simple,
+                    clear explanations instantly.
+                </p>
+
+                <button onclick="showAssistant()">
+                    Ask EduGenie
+                </button>
+
+            </div>
+
+
+            <!-- QUIZ -->
+
+            <div class="feature-card">
+
+                <div class="icon">📝</div>
+
+                <h2>Quiz Generator</h2>
+
+                <p>
+                    Generate questions and test your
+                    knowledge using AI.
+                </p>
+
+                <button onclick="showQuiz()">
+                    Create Quiz
+                </button>
+
+            </div>
+
+
+            <!-- NOTES -->
+
+            <div class="feature-card">
+
+                <div class="icon">📚</div>
+
+                <h2>Study Notes</h2>
+
+                <p>
+                    Learn difficult topics through
+                    simple and organized notes.
+                </p>
+
+                <button onclick="showNotes()">
+                    Study Notes
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= AI ASSISTANT ================= -->
+
+        <section class="assistant" id="assistant">
+
+            <div class="assistant-header">
+
+                <div>
+
+                    <h2>🤖 Ask EduGenie</h2>
+
+                    <p>
+                        Ask any academic question
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <textarea
+                id="question"
+                placeholder="Example: Explain artificial intelligence in simple words..."
+            ></textarea>
+
+
+            <button
+                class="ask-btn"
+                onclick="askQuestion()">
+                Ask EduGenie
+            </button>
+
+
+            <!-- ANSWER -->
+
+            <div class="answer">
+
+                <h3>💡 EduGenie Answer</h3>
+
+                <p id="answer">
+                    Your AI-generated answer will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= QUIZ SECTION ================= -->
+
+        <section class="quiz-section" id="quiz">
+
+            <div class="quiz-header">
+
+                <h2>📝 AI Quiz Generator</h2>
+
+                <p>
+                    Create a quiz based on the topic you want to learn.
+                </p>
+
+            </div>
+
+
+            <!-- QUIZ INPUT -->
+
+            <div class="quiz-form">
+
+                <label for="quizTopic">
+                    Enter Topic
+                </label>
+
+                <input
+                    type="text"
+                    id="quizTopic"
+                    placeholder="Example: Python Programming"
+                >
+
+
+                <label for="quizDifficulty">
+                    Difficulty Level
+                </label>
+
+                <select id="quizDifficulty">
+
+                    <option value="Easy">
+                        Easy
+                    </option>
+
+                    <option value="Medium" selected>
+                        Medium
+                    </option>
+
+                    <option value="Hard">
+                        Hard
+                    </option>
+
+                </select>
+
+
+                <label for="quizCount">
+                    Number of Questions
+                </label>
+
+                <select id="quizCount">
+
+                    <option value="5">
+                        5 Questions
+                    </option>
+
+                    <option value="10">
+                        10 Questions
+                    </option>
+
+                </select>
+
+
+                <button
+                    class="quiz-btn"
+                    onclick="generateQuiz()">
+                    Generate Quiz
+                </button>
+
+            </div>
+
+
+            <!-- QUIZ RESULT -->
+
+            <div
+                class="quiz-result"
+                id="quizResult">
+
+                <h3>📋 Your Quiz</h3>
+
+                <p>
+                    Enter a topic above and click
+                    "Generate Quiz".
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= NOTES SECTION ================= -->
+
+        <section class="notes-section" id="notes">
+
+    <h2>📚 AI Study Notes</h2>
+
+    <p>
+        Generate clear and easy-to-understand study notes using EduGenie AI.
+    </p>
+
+    <div class="notes-box">
+
+        <label for="notesTopic">Enter Topic</label>
+
+        <input
+            type="text"
+            id="notesTopic"
+            placeholder="Example: Operating System"
+        >
+
+        <button
+            type="button"
+            class="notes-btn"
+            id="generateNotesBtn">
+            Generate Notes
+        </button>
+
+    </div>
+
+    <div id="notesResult" class="notes-result">
+        Your AI-generated notes will appear here.
+    </div>
+
+</section>
+<!-- ================= PDF SUMMARIZER ================= -->
+
+<section class="pdf-section" id="pdf">
+
+    <h2>📄 AI PDF Summarizer</h2>
+
+    <p>
+        Upload a PDF and let EduGenie create a simple summary.
+    </p>
+
+    <div class="pdf-box">
+
+        <label for="pdfFile">
+            Select PDF File
+        </label>
+
+        <input
+            type="file"
+            id="pdfFile"
+            accept=".pdf"
+        >
+
+        <button
+            type="button"
+            class="pdf-btn"
+            id="summarizePdfBtn">
+            Summarize PDF
+        </button>
+
+    </div>
+
+    <div id="pdfResult" class="pdf-result">
+        Your AI-generated PDF summary will appear here.
+    </div>
+
+</section>
+<!-- ================= PROGRESS TRACKER ================= -->
+
+<section class="progress-section" id="progress">
+
+    <h2>📊 Learning Progress</h2>
+
+    <p>
+        Track your quiz performance with EduGenie.
+    </p>
+
+    <div class="progress-cards">
+
+        <div class="progress-card">
+            <h3>📝 Quizzes Completed</h3>
+            <strong id="quizCompleted">0</strong>
+        </div>
+
+        <div class="progress-card">
+            <h3>🎯 Average Score</h3>
+            <strong id="averageScore">0%</strong>
+        </div>
+
+        <div class="progress-card">
+            <h3>🏆 Best Score</h3>
+            <strong id="bestScore">0%</strong>
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= PROGRESS TRACKER ================= -->
+
+<section class="progress-section" id="progress">
+
+    <h2>📊 Learning Progress</h2>
+
+    <p>Track your quiz performance with EduGenie.</p>
+
+    <div class="progress-cards">
+
+        <div class="progress-card">
+            <h3>📝 Quizzes Completed</h3>
+            <strong id="quizCompleted">0</strong>
+        </div>
+
+        <div class="progress-card">
+            <h3>🎯 Average Score</h3>
+            <strong id="averageScore">0%</strong>
+        </div>
+
+        <div class="progress-card">
+            <h3>🏆 Best Score</h3>
+            <strong id="bestScore">0%</strong>
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= RECENT ACTIVITY ================= -->
+
+<section class="activity-section" id="activity">
+
+    <h2>🕒 Recent Activity</h2>
+
+    <p>Your latest learning activities.</p>
+
+    <div id="activityList" class="activity-list">
+
+        <div class="no-activity">
+            No recent activity yet.
+        </div>
+
+    </div>
+
+</section>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7ff;
+    color: #222;
+}
+
+/* Sidebar */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 230px;
+    height: 100vh;
+    background: #3157d5;
+    padding: 30px 20px;
+    color: white;
+}
+
+.sidebar h1 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.menu-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: white;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main area */
+
+.main {
+    margin-left: 230px;
+    padding: 30px 45px;
+}
+
+/* Top bar */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar h2 {
+    margin: 0;
+}
+
+/* Welcome */
+
+.welcome {
+    margin-top: 35px;
+    padding: 35px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.welcome h1 {
+    margin-top: 0;
+    color: #3157d5;
+}
+
+/* Cards */
+
+.cards {
+    display: flex;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.feature-card {
+    flex: 1;
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.feature-card h2 {
+    margin-top: 0;
+}
+
+.feature-card button,
+.assistant button {
+    background: #3157d5;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.feature-card button:hover,
+.assistant button:hover {
+    background: #2445b5;
+}
+
+/* AI Assistant */
+
+.assistant {
+    margin-top: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.assistant textarea {
+    width: 100%;
+    height: 120px;
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    resize: vertical;
+    font-size: 16px;
+}
+
+.answer {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f4f7ff;
+    border-radius: 12px;
+    line-height: 1.6;
+}
+.quiz-card {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.quiz-question {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.quiz-option {
+    display: block;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.quiz-option:hover {
+    background: #f3f4f6;
+}
+
+.quiz-option input {
+    margin-right: 10px;
+}
+
+.quiz-card.correct {
+    border-left: 5px solid #22c55e;
+}
+
+.quiz-card.wrong {
+    border-left: 5px solid #ef4444;
+}
+
+.submit-quiz-btn {
+    display: block;
+    margin: 25px auto;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background: #4f46e5;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submit-quiz-btn:hover {
+    opacity: 0.9;
+}
+
+.score-card {
+    text-align: center;
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 12px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.score-card h2 {
+    margin-bottom: 10px;
+}
+
+.score-card strong {
+    display: block;
+    font-size: 32px;
+    margin-top: 10px;
+}
+/* ================= PROGRESS TRACKER ================= */
+
+.progress-section {
+    margin-top: 40px;
+    padding: 30px;
+}
+
+.progress-section h2 {
+    margin-bottom: 10px;
+}
+
+.progress-section > p {
+    margin-bottom: 25px;
+    color: #6b7280;
+}
+
+.progress-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.progress-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.progress-card h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.progress-card strong {
+    display: block;
+    font-size: 32px;
+    color: #4f46e5;
+}
+/* ================= PROGRESS TRACKER ================= */
+
+.progress-section {
+    margin-top: 40px;
+    padding: 30px;
+}
+
+.progress-section h2 {
+    margin-bottom: 10px;
+}
+
+.progress-section > p {
+    margin-bottom: 25px;
+    color: #6b7280;
+}
+
+.progress-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.progress-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.progress-card h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.progress-card strong {
+    display: block;
+    font-size: 32px;
+    color: #4f46e5;
+}
+/* ================= RECENT ACTIVITY ================= */
+
+.activity-section {
+    margin-top: 40px;
+    padding: 30px;
+}
+
+.activity-section h2 {
+    margin-bottom: 10px;
+}
+
+.activity-section > p {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.activity-list {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    font-size: 25px;
+}
+
+.activity-info strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.activity-info p {
+    margin: 0;
+    color: #6b7280;
+}
+
+.no-activity {
+    padding: 25px;
+    text-align: center;
+    color: #6b7280;
+}
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    display: block;
+}
