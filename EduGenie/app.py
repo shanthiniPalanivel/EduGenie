@@ -16,11 +16,10 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not GEMINI_API_KEY:
     print("ERROR: GEMINI_API_KEY not found in .env")
+    client = None
 else:
     print("Gemini API key loaded successfully.")
-
-# Create Gemini client
-client = genai.Client(api_key=GEMINI_API_KEY)
+    client = genai.Client(api_key=GEMINI_API_KEY)
 
 
 # ==========================================
@@ -40,39 +39,48 @@ MODELS = [
 
 def ask_gemini(prompt):
 
+    if client is None:
+        raise Exception("Gemini API key is not configured.")
+
     last_error = None
 
     for model in MODELS:
 
         try:
-            print("Trying model:", model)
+            print(f"Trying Gemini model: {model}")
 
             response = client.models.generate_content(
                 model=model,
                 contents=prompt
             )
 
-            print("Gemini response received.")
+            if response and response.text:
+                print(f"Gemini response received from {model}")
+                return response.text
 
-            return response.text
+            raise Exception("Gemini returned an empty response.")
 
         except Exception as e:
 
             last_error = e
 
-            print("Gemini error:", repr(e))
+            print(f"Gemini error with {model}: {repr(e)}")
 
-            error_text = str(e)
+            error_text = str(e).upper()
 
+            # Try next model for temporary/server/rate-limit errors
             if (
                 "503" in error_text
                 or "UNAVAILABLE" in error_text
                 or "429" in error_text
                 or "RESOURCE_EXHAUSTED" in error_text
+                or "500" in error_text
+                or "INTERNAL" in error_text
             ):
                 print("Trying next Gemini model...")
                 continue
 
+            # Do not keep retrying for API key/authentication errors
             raise e
 
     raise last_error
@@ -94,7 +102,7 @@ def home():
 @app.route("/ask", methods=["POST"])
 def ask():
 
-    data = request.get_json() or {}
+    data = request.get_json(silent=True) or {}
 
     question = data.get("question", "").strip()
 
@@ -135,7 +143,7 @@ Student question:
         print("AI ASSISTANT ERROR:", repr(e))
 
         return jsonify({
-            "answer": "Gemini is temporarily unavailable. Please try again."
+            "answer": "Gemini is temporarily unavailable. Please check your API key and try again."
         }), 503
 
 
@@ -146,7 +154,7 @@ Student question:
 @app.route("/quiz", methods=["POST"])
 def quiz():
 
-    data = request.get_json() or {}
+    data = request.get_json(silent=True) or {}
 
     topic = data.get("topic", "").strip()
     difficulty = data.get("difficulty", "Medium")
@@ -159,7 +167,7 @@ def quiz():
 
     try:
         count = int(count)
-    except:
+    except (ValueError, TypeError):
         count = 5
 
     if count < 1:
@@ -219,7 +227,7 @@ Rules:
         print("QUIZ ERROR:", repr(e))
 
         return jsonify({
-            "quiz": "Gemini is temporarily unavailable. Please try again."
+            "quiz": "Gemini is temporarily unavailable. Please check your API key and try again."
         }), 503
 
 
@@ -230,7 +238,7 @@ Rules:
 @app.route("/notes", methods=["POST"])
 def notes():
 
-    data = request.get_json() or {}
+    data = request.get_json(silent=True) or {}
 
     topic = data.get("topic", "").strip()
 
@@ -247,6 +255,7 @@ Create study notes for:
 {topic}
 
 Include:
+
 1. Definition
 2. Important concepts
 3. Key points
@@ -273,7 +282,7 @@ Do not use **.
         print("NOTES ERROR:", repr(e))
 
         return jsonify({
-            "notes": "Gemini is temporarily unavailable. Please try again."
+            "notes": "Gemini is temporarily unavailable. Please check your API key and try again."
         }), 503
 
 
@@ -305,21 +314,23 @@ def summarize_pdf():
 
         reader = PdfReader(pdf_file)
 
-        text = ""
+        text_parts = []
 
         for page in reader.pages:
 
             page_text = page.extract_text()
 
             if page_text:
-                text += page_text + "\n"
+                text_parts.append(page_text)
+
+        text = "\n".join(text_parts)
 
         if not text.strip():
             return jsonify({
                 "summary": "No readable text was found in the PDF."
             }), 400
 
-        # Limit text sent to Gemini
+        # Limit PDF text sent to Gemini
         text = text[:30000]
 
         prompt = f"""
@@ -328,6 +339,7 @@ You are EduGenie, an AI learning assistant.
 Summarize the following PDF content for a college student.
 
 Requirements:
+
 - Identify the main topic.
 - Explain the important concepts.
 - List the key points.
@@ -353,7 +365,7 @@ PDF CONTENT:
         print("PDF ERROR:", repr(e))
 
         return jsonify({
-            "summary": "Gemini could not summarize the PDF right now."
+            "summary": "Gemini could not summarize the PDF right now. Please try again."
         }), 503
 
 
@@ -366,7 +378,8 @@ def test():
 
     return jsonify({
         "status": "EduGenie is running",
-        "gemini_api_key_loaded": bool(GEMINI_API_KEY)
+        "gemini_api_key_loaded": bool(GEMINI_API_KEY),
+        "models": MODELS
     })
 
 
@@ -387,6 +400,7 @@ if __name__ == "__main__":
         print("Gemini API Key: NOT FOUND")
 
     print("Server: http://127.0.0.1:5000")
+    print("Test:   http://127.0.0.1:5000/test")
     print("======================================")
     print()
 
