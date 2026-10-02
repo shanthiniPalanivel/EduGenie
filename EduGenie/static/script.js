@@ -1,12 +1,3 @@
-// ========================================
-// EduGenie - Complete Script
-// ========================================
-
-
-// ========================================
-// PAGE LOADED
-// ========================================
-
 document.addEventListener("DOMContentLoaded", () => {
 
     const questionInput = document.getElementById("question");
@@ -425,6 +416,8 @@ function submitQuiz() {
             <strong>${score} / ${questions.length}</strong>
         </div>
     `;
+    
+saveQuizScore(score, questions.length);
 
     // Disable options after submission
     document.querySelectorAll(".quiz-option input").forEach(input => {
@@ -479,7 +472,7 @@ function clearQuestion() {
 
     questionInput.value = "";
 
-    answerBox.innerHTML = `
+    answerBox.innersaveQuizHTML = `
         Your AI-generated answer will appear here.
     `;
 
@@ -625,7 +618,7 @@ async function summarizePDF() {
     }
 
     const formData = new FormData();
-    formData.append("pdf", file);
+    formData.append("file", file);
 
     resultBox.innerHTML = `
         <div class="loading">
@@ -711,9 +704,7 @@ function updateProgress() {
 
 function saveQuizScore(score, total) {
 
-    const percentage = Math.round(
-        (score / total) * 100
-    );
+    const percentage = Math.round((score / total) * 100);
 
     const scores = JSON.parse(
         localStorage.getItem("edugenieScores") || "[]"
@@ -731,18 +722,18 @@ function saveQuizScore(score, total) {
     );
 
     updateProgress();
+
+    saveActivity(
+        "📝",
+        "Quiz Completed",
+        `You scored ${score}/${total}`
+    );
 }
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    updateProgress();
-});
 function updateActivity() {
 
     const activities = JSON.parse(
         localStorage.getItem("edugenieActivity") || "[]"
     );
-
     const activityList = document.getElementById("activityList");
 
     if (!activityList) {
